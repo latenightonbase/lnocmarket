@@ -7,7 +7,35 @@
  * come later, once this is reviewed, and will need auth wired in.
  */
 
-const API_ORIGIN = (process.env.API_ORIGIN || "https://api.lnoc.app").replace(/\/+$/, "");
+import { getApiOrigin } from "@/lib/api-origin";
+
+const API_ORIGIN = getApiOrigin();
+
+export type UserRole = "USER" | "SUPERADMIN";
+
+export type PublicUser = {
+  id: string;
+  createdAt: string;
+  username?: string | null;
+  avatarUrl?: string | null;
+  role: UserRole;
+  email?: string | null;
+  wallets: Array<{ address: string; chainId: number; isPrimary: boolean; verifiedAt: string }>;
+};
+
+export function isSuperadmin(user: PublicUser | null | undefined) {
+  return user?.role === "SUPERADMIN";
+}
+
+/** Client-side session check — goes through the /backend proxy so the session
+ * cookie (set on api.lnoc.app) is sent along correctly. */
+export async function fetchMe(): Promise<PublicUser | null> {
+  const res = await fetch("/backend/auth/me", { credentials: "include", cache: "no-store" });
+  if (res.status === 401) return null;
+  if (!res.ok) throw new Error("Failed to load session");
+  const data = (await res.json()) as { user: PublicUser };
+  return data.user;
+}
 
 export type ListingCategory =
   | "SHOUTOUT"

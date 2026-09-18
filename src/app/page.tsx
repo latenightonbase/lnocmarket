@@ -1,4 +1,5 @@
 import { CATEGORIES, fetchListings, type ListingCategory, type PublicListing } from "@/lib/api";
+import { MarketplaceHeader } from "@/components/MarketplaceHeader";
 
 function timeLeft(endDate?: string | null): string | null {
   if (!endDate) return null;
@@ -70,21 +71,7 @@ export default async function MarketplacePage({
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-lg font-medium">Marketplace</h1>
-          <p className="text-sm text-[var(--text-secondary)]">
-            Book media placements directly from creators
-          </p>
-        </div>
-        <button
-          disabled
-          title="Creator listing flow is next — not wired up yet"
-          className="cursor-not-allowed rounded-lg border border-[var(--border)] px-3.5 py-2 text-sm text-[var(--text-muted)]"
-        >
-          + List something
-        </button>
-      </div>
+      <MarketplaceHeader />
 
       <div className="mb-6 flex flex-wrap gap-2">
         {CATEGORIES.map((c) => {
