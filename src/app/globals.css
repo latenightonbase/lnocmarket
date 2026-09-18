@@ -9,6 +9,7 @@
   --text-muted: #737373;
   --accent: #7c5cff;
   --accent-bg: rgba(124, 92, 255, 0.12);
+  --border-accent: rgba(124, 92, 255, 0.4);
 }
 
 body {

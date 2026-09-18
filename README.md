@@ -7,6 +7,13 @@ live auction site (`latenightonbase/house`) while this is in progress.
 
 - **Marketplace browse page (`/`)** — reads listings from the live API at
   `api.lnoc.app`, filterable by category.
+- **Create-listing flow (`/listings/new`)** — real form, writes a real
+  on-chain transaction against the listings contract on Robinhood Chain
+  (`startAuction` or `startFixedPriceListing`, ported from house's ABI),
+  waits for confirmation, then POSTs the result to `/listings`. This will
+  currently fail with a 403 for any wallet that isn't SUPERADMIN — that
+  gate is still live on the API. Fully wired otherwise, so testing with the
+  superadmin wallet should work end to end, on-chain tx included.
 - **Wallet auth** — real SIWE sign-in via RainbowKit/wagmi, talking to the
   same `/auth/*` endpoints and session cookie as the live site. A wallet
   already verified on lnoc.app works here too. Ported directly from
@@ -19,12 +26,10 @@ live auction site (`latenightonbase/house`) while this is in progress.
 
 ## Not yet built
 
-- Create-listing flow (the form we sketched) — the header button is wired
-  to show connect/sign-in state correctly but stays disabled until this
-  exists
 - Creator profile page
-- Approval queue for new listings
-- Wallet-signed on-chain listing/bid flow
+- Approval queue for new listings (create-listing currently 403s for
+  anyone who isn't SUPERADMIN — see below)
+- Bidding on auction listings (contract call exists, no UI yet)
 
 ## Known simplification vs. house
 
@@ -42,3 +47,10 @@ npm run dev
 Runs on port 3010. Copy `.env.example` to `.env.local` and fill in
 `NEXT_PUBLIC_REOWN_PROJECT_ID` for full WalletConnect support (optional —
 MetaMask/Coinbase/injected wallets work without it).
+
+## Correction from earlier
+
+The browse page and mockups referred to prices in USDC. The real listings
+contract settles in **USDG** (Robinhood Chain's stablecoin) — the browse
+page already displays `listing.currency` dynamically from the API so it's
+unaffected, but worth knowing before sharing anything externally.

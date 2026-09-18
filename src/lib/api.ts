@@ -1,10 +1,10 @@
 /**
- * Read-only client for the existing LNOC marketplace API (api.lnoc.app).
+ * Client for the existing LNOC marketplace API (api.lnoc.app) — the SAME
+ * backend that powers the live auction site at lnoc.app. This does not
+ * fork or modify that backend in any way.
  *
- * This talks to the SAME backend that powers the live auction site at
- * lnoc.app — it does not touch, fork, or modify that backend in any way.
- * Everything here is GET-only. Write flows (creating a listing, bidding)
- * come later, once this is reviewed, and will need auth wired in.
+ * fetchListings/fetchMe are plain reads. createListing writes a real row
+ * via POST /listings, gated server-side to SUPERADMIN — see its docstring.
  */
 
 import { getApiOrigin } from "@/lib/api-origin";
@@ -90,11 +90,44 @@ export const CATEGORIES: { value: ListingCategory | "ALL"; label: string }[] = [
   { value: "OTHER", label: "Other" },
 ];
 
-/**
- * Fetches active listings from the live marketplace API. Server-side only
- * (called from a Server Component) so it never runs in the browser and
- * never needs CORS configured on the API.
- */
+/** Same string passed to startAuction / startFixedPriceListing on-chain — the client
+ * generates this id, writes it to the contract, then posts it here with the tx fields. */
+export interface NewListingInput {
+  id: string;
+  title: string;
+  description?: string;
+  category: ListingCategory;
+  pricingType: PricingType;
+  price: number;
+  currency?: string;
+  endDate: string;
+  placement?: string;
+  platform?: "YOUTUBE" | "TWITTER" | "INSTAGRAM" | "TIKTOK";
+  turnaroundDays?: number;
+  slotsAvailable?: number;
+  txHash: string;
+  chainId: number;
+  contractAddress: string;
+  tokenAddress: string;
+  tokenName?: string;
+}
+
+/** Persists a listing after its on-chain tx has confirmed. Will 403 unless the
+ * signed-in wallet is SUPERADMIN — that gate is still live on the API and is the
+ * last thing to remove, once the approval queue exists. */
+export async function createListing(input: NewListingInput): Promise<PublicListing> {
+  const res = await fetch("/backend/listings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(input),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || `Failed to create listing (${res.status})`);
+  }
+  return data.listing as PublicListing;
+}
 export async function fetchListings(category?: ListingCategory): Promise<PublicListing[]> {
   const params = new URLSearchParams({ status: "ACTIVE" });
   if (category) params.set("category", category);
