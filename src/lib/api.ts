@@ -154,6 +154,39 @@ export async function rejectListing(id: string): Promise<PublicListing> {
   return data.listing as PublicListing;
 }
 
+export type CreatorDetail = {
+  id: string;
+  wallet?: string;
+  displayName: string;
+  username?: string;
+  avatarUrl?: string | null;
+  verified: boolean;
+  totalRevenue: number;
+  auctionCount: number;
+  bookingsThisMonth: number;
+  reach?: string;
+  engagement?: string;
+};
+
+/** Public creator profile + their live listings. Server-side only, same pattern
+ * as fetchListings. Returns null on any failure so the page can show a clean
+ * "not found" rather than crash. */
+export async function fetchCreator(
+  id: string,
+): Promise<{ creator: CreatorDetail; listings: PublicListing[] } | null> {
+  try {
+    const res = await fetch(`${API_ORIGIN}/creators/${id}`, {
+      next: { revalidate: 30 },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return { creator: data.creator as CreatorDetail, listings: (data.listings ?? []) as PublicListing[] };
+  } catch {
+    return null;
+  }
+}
+
 export async function fetchListings(category?: ListingCategory): Promise<PublicListing[]> {
   const params = new URLSearchParams({ status: "ACTIVE" });
   if (category) params.set("category", category);

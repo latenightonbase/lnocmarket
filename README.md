@@ -62,3 +62,18 @@ for the SUPERADMIN wallet. Will show a clear error, not a silent failure,
 if the `house` approval-queue branch hasn't been merged yet — the
 `/listings/pending`, `/listings/:id/approve`, `/listings/:id/reject`
 endpoints it calls don't exist on the live API until then.
+
+## Correction
+
+I'd earlier said creator profile pages "already exist" and could be reused
+from house. That was wrong — that route only exists in house's legacy
+Mongo-based app (apps/web), not the newer API (apps/api) this whole repo
+is built against. Built it fresh instead, against the real `GET
+/creators/:id` endpoint.
+
+## Creator profile (`/creator/[id]`)
+
+Public, no wallet needed. Shows the creator's name, verified badge, basic
+stats (listings booked, bookings this month, reach), and their currently
+active listings. Linked from every listing card's creator name/avatar on
+the browse page.
