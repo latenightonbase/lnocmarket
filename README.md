@@ -54,3 +54,11 @@ The browse page and mockups referred to prices in USDC. The real listings
 contract settles in **USDG** (Robinhood Chain's stablecoin) — the browse
 page already displays `listing.currency` dynamically from the API so it's
 unaffected, but worth knowing before sharing anything externally.
+
+## Review queue (`/review`)
+
+Real, clickable version of the approval-queue mockup. Only renders content
+for the SUPERADMIN wallet. Will show a clear error, not a silent failure,
+if the `house` approval-queue branch hasn't been merged yet — the
+`/listings/pending`, `/listings/:id/approve`, `/listings/:id/reject`
+endpoints it calls don't exist on the live API until then.

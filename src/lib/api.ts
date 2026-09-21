@@ -112,9 +112,9 @@ export interface NewListingInput {
   tokenName?: string;
 }
 
-/** Persists a listing after its on-chain tx has confirmed. Will 403 unless the
- * signed-in wallet is SUPERADMIN — that gate is still live on the API and is the
- * last thing to remove, once the approval queue exists. */
+/** Persists a listing after its on-chain tx has confirmed. 403s unless the
+ * signed-in wallet is SUPERADMIN or the approval-queue branch is merged (then
+ * it saves as PENDING_REVIEW for everyone else instead). */
 export async function createListing(input: NewListingInput): Promise<PublicListing> {
   const res = await fetch("/backend/listings", {
     method: "POST",
@@ -128,6 +128,32 @@ export async function createListing(input: NewListingInput): Promise<PublicListi
   }
   return data.listing as PublicListing;
 }
+
+export type PendingListing = PublicListing & { submittedAt: string };
+
+/** Admin-only. Will fail until the approval-queue branch in house is merged —
+ * these endpoints don't exist on the live API yet. */
+export async function fetchPendingListings(): Promise<PendingListing[]> {
+  const res = await fetch("/backend/listings/pending", { credentials: "include", cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load review queue (${res.status})`);
+  const data = await res.json();
+  return (data.listings ?? []) as PendingListing[];
+}
+
+export async function approveListing(id: string): Promise<PublicListing> {
+  const res = await fetch(`/backend/listings/${id}/approve`, { method: "POST", credentials: "include" });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Failed to approve (${res.status})`);
+  return data.listing as PublicListing;
+}
+
+export async function rejectListing(id: string): Promise<PublicListing> {
+  const res = await fetch(`/backend/listings/${id}/reject`, { method: "POST", credentials: "include" });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Failed to reject (${res.status})`);
+  return data.listing as PublicListing;
+}
+
 export async function fetchListings(category?: ListingCategory): Promise<PublicListing[]> {
   const params = new URLSearchParams({ status: "ACTIVE" });
   if (category) params.set("category", category);
