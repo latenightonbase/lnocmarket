@@ -187,6 +187,63 @@ export async function fetchCreator(
   }
 }
 
+/** Server-side single-listing fetch, for the detail/bid page. */
+export async function fetchListing(id: string): Promise<PublicListing | null> {
+  try {
+    const res = await fetch(`${API_ORIGIN}/listings/${id}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.listing as PublicListing;
+  } catch {
+    return null;
+  }
+}
+
+export type ListingBidder = {
+  wallet: string;
+  amount: number;
+  bidCount: number;
+  lastBidAt: string;
+  leading: boolean;
+};
+
+/** Client-side — called after an on-chain bid to refresh the bid history shown on the page. */
+export async function fetchListingBidders(id: string): Promise<ListingBidder[]> {
+  const res = await fetch(`/backend/listings/${id}/bidders`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load bids (${res.status})`);
+  const data = await res.json();
+  return (data.bidders ?? []) as ListingBidder[];
+}
+
+/** Persists an on-chain bid so it shows up in bid history / outbid notifications. */
+export async function recordBid(id: string, amount: number, txHash: string): Promise<PublicListing> {
+  const res = await fetch(`/backend/listings/${id}/bid`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ amount, txHash }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Failed to record bid (${res.status})`);
+  return data.listing as PublicListing;
+}
+
+/** Persists an on-chain fixed-price purchase. */
+export async function bookListing(id: string, txHash: string): Promise<PublicListing> {
+  const res = await fetch(`/backend/listings/${id}/book`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ txHash }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Failed to record purchase (${res.status})`);
+  return data.listing as PublicListing;
+}
+
 export async function fetchListings(category?: ListingCategory): Promise<PublicListing[]> {
   const params = new URLSearchParams({ status: "ACTIVE" });
   if (category) params.set("category", category);

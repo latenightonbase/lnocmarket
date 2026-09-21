@@ -1,6 +1,12 @@
 import { parseAbi } from "viem";
 import { robinhood } from "@/lib/chains";
 
+export const erc20Abi = parseAbi([
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
+  "function balanceOf(address account) view returns (uint256)",
+]);
+
 /**
  * The real listings marketplace contract — Robinhood Chain, not Base.
  * Ported directly from house/apps/app/src/lib/contracts/auctionHouse.ts.

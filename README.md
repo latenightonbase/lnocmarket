@@ -77,3 +77,13 @@ Public, no wallet needed. Shows the creator's name, verified badge, basic
 stats (listings booked, bookings this month, reach), and their currently
 active listings. Linked from every listing card's creator name/avatar on
 the browse page.
+
+## Bidding and buying (`/listings/[id]`)
+
+Real listing detail page. Auction listings: enter a bid, it checks/sets
+USDG allowance, calls `placeBid` on-chain, then records it via `POST
+/listings/:id/bid` (also shows bid history from `GET
+/listings/:id/bidders`). Fixed-price listings: "Buy now" does the same
+allowance/approve dance, then `buyListing`, then `POST
+/listings/:id/book`. Same approve-then-act pattern house's own listing
+page uses. Every listing card now links here.

@@ -35,7 +35,9 @@ export function ListingCard({ listing, hideCreator = false }: { listing: PublicL
         </a>
       )}
 
-      <div className="mb-1 text-sm font-medium leading-snug">{listing.title}</div>
+      <a href={`/listings/${listing.id}`} className="mb-1 block text-sm font-medium leading-snug hover:opacity-80">
+        {listing.title}
+      </a>
 
       <span className="mb-2.5 inline-block rounded-full bg-[var(--accent-bg)] px-2.5 py-0.5 text-xs text-[var(--accent)]">
         {categoryLabel(listing.category)}
