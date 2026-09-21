@@ -161,6 +161,7 @@ export async function fetchListings(category?: ListingCategory): Promise<PublicL
   try {
     const res = await fetch(`${API_ORIGIN}/listings?${params.toString()}`, {
       next: { revalidate: 30 },
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return [];
     const data = await res.json();
