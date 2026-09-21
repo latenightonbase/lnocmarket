@@ -37,6 +37,8 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
     const responseHeaders = new Headers();
     const contentType = upstream.headers.get("content-type");
     if (contentType) responseHeaders.set("content-type", contentType);
+    const location = upstream.headers.get("location");
+    if (location) responseHeaders.set("location", location);
     for (const cookie of upstream.headers.getSetCookie()) {
       responseHeaders.append("set-cookie", cookie);
     }

@@ -21,6 +21,15 @@ export type PublicUser = {
   role: UserRole;
   email?: string | null;
   wallets: Array<{ address: string; chainId: number; isPrimary: boolean; verifiedAt: string }>;
+  socials: Array<{
+    platform: "YOUTUBE" | "TWITTER" | "INSTAGRAM" | "TIKTOK";
+    platformUserId: string;
+    username: string | null;
+    displayName: string | null;
+    avatarUrl: string | null;
+    followerCount: number | null;
+    followerCountSyncedAt: string | null;
+  }>;
 };
 
 export function isSuperadmin(user: PublicUser | null | undefined) {

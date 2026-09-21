@@ -101,3 +101,21 @@ Creator profile shows connected platforms. Two tiers, same code:
 Still not built: booking track record, dispute count, and delivery-proof
 links from the original evidence-layer mockup - those need real
 dispute-tracking and proof-upload systems that don't exist yet.
+
+## Connect accounts (`/account`)
+
+Real screen: shows the 4 platforms, "Connect" buttons that hit the real
+OAuth start endpoints (`/backend/socials/:platform/start`), already-linked
+accounts shown with their real follower counts from `GET /auth/me`.
+
+**Blocked on an env var, not code.** The API's SIWE domain check only
+trusts a hardcoded list of origins (`lnoc.app`, `www.lnoc.app`, one
+specific Vercel URL) - `lnocmarket.vercel.app` isn't on it. Sign-in itself
+may currently be rejected until `APP_ORIGINS` on the live API includes
+this domain. This affects ALL authenticated actions here (create listing,
+bid, review queue, connect accounts), not just this page - it's a
+pre-existing gap this build exposed, not something new.
+
+Also fixed: the /backend proxy was silently dropping the `Location`
+header on redirects, which would have broken OAuth's redirect to
+YouTube/X/etc. regardless of the origin issue above.
