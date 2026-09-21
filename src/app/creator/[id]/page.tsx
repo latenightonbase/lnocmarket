@@ -2,6 +2,67 @@ import { notFound } from "next/navigation";
 import { fetchCreator } from "@/lib/api";
 import { ListingCard, initials } from "@/components/ListingCard";
 
+const PLATFORM_LABEL: Record<string, string> = {
+  youtube: "YouTube",
+  x: "X",
+  instagram: "Instagram",
+  tiktok: "TikTok",
+};
+
+function LinkedAccounts({
+  platforms,
+  socials,
+}: {
+  platforms?: string[];
+  socials?: { platform: string; followers: string }[];
+}) {
+  // Rich version: real per-platform counts, once house's
+  // creator-social-breakdown branch is merged.
+  if (socials && socials.length > 0) {
+    return (
+      <div className="mb-8">
+        <div className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+          Linked accounts
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {socials.map((s) => (
+            <div
+              key={s.platform}
+              className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm"
+            >
+              <span className="text-[var(--text-secondary)]">
+                {PLATFORM_LABEL[s.platform] ?? s.platform}
+              </span>{" "}
+              <span className="font-medium">{s.followers}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback: connected platform names only, no counts - what's actually
+  // live on the API today, before that branch merges.
+  if (platforms && platforms.length > 0) {
+    return (
+      <div className="mb-8">
+        <div className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+          Linked accounts
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {platforms.map((p) => (
+            <div key={p} className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm text-[var(--text-secondary)]">
+              {PLATFORM_LABEL[p] ?? p}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 export default async function CreatorPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const result = await fetchCreator(id);
@@ -33,6 +94,8 @@ export default async function CreatorPage({ params }: { params: Promise<{ id: st
           )}
         </div>
       </div>
+
+      <LinkedAccounts platforms={creator.platforms} socials={creator.socials} />
 
       <div className="mb-8 grid grid-cols-3 gap-3">
         <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 text-center">

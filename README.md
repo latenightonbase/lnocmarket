@@ -87,3 +87,17 @@ USDG allowance, calls `placeBid` on-chain, then records it via `POST
 allowance/approve dance, then `buyListing`, then `POST
 /listings/:id/book`. Same approve-then-act pattern house's own listing
 page uses. Every listing card now links here.
+
+## Linked accounts (evidence layer, part 1)
+
+Creator profile shows connected platforms. Two tiers, same code:
+- **Today, live**: platform names only (YouTube, X, etc.) - what
+  `GET /creators/:id` already returns
+- **Once merged**: real per-platform follower counts, from a new small
+  branch in house (`creator-social-breakdown`) that adds this to the same
+  endpoint - purely additive, no schema change, safe to review
+  independently of the approval-queue branch
+
+Still not built: booking track record, dispute count, and delivery-proof
+links from the original evidence-layer mockup - those need real
+dispute-tracking and proof-upload systems that don't exist yet.

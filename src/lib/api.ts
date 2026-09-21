@@ -166,6 +166,14 @@ export type CreatorDetail = {
   bookingsThisMonth: number;
   reach?: string;
   engagement?: string;
+  /** Connected platform names, always available. */
+  platforms?: string[];
+  /**
+   * Per-platform follower counts. Only present once house's
+   * creator-social-breakdown branch is merged - undefined/empty until then,
+   * and the profile page falls back to `platforms` (no counts) gracefully.
+   */
+  socials?: { platform: string; followers: string }[];
 };
 
 /** Public creator profile + their live listings. Server-side only, same pattern
