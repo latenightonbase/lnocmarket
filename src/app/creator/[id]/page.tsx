@@ -21,7 +21,7 @@ function LinkedAccounts({
   if (socials && socials.length > 0) {
     return (
       <div className="mb-8">
-        <div className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+        <div className="mb-2 text-sm font-display italic text-[var(--text-secondary)]">
           Linked accounts
         </div>
         <div className="flex flex-wrap gap-2">
@@ -46,7 +46,7 @@ function LinkedAccounts({
   if (platforms && platforms.length > 0) {
     return (
       <div className="mb-8">
-        <div className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
+        <div className="mb-2 text-sm font-display italic text-[var(--text-secondary)]">
           Linked accounts
         </div>
         <div className="flex flex-wrap gap-2">
@@ -77,14 +77,14 @@ export default async function CreatorPage({ params }: { params: Promise<{ id: st
       </a>
 
       <div className="mb-8 flex items-center gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent-bg)] text-lg font-medium text-[var(--accent)]">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--spotlight-bg)] text-lg font-medium text-[var(--spotlight)]">
           {initials(creator.displayName)}
         </div>
         <div>
           <div className="flex items-center gap-1.5">
-            <h1 className="text-lg font-medium">{creator.displayName}</h1>
+            <h1 className="font-display text-xl">{creator.displayName}</h1>
             {creator.verified && (
-              <span className="rounded-full bg-[var(--accent-bg)] px-2 py-0.5 text-[10px] font-medium text-[var(--accent)]">
+              <span className="rounded-full bg-[var(--spotlight-bg)] px-2 py-0.5 text-[10px] font-medium text-[var(--spotlight)]">
                 Verified
               </span>
             )}

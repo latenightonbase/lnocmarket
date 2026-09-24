@@ -159,14 +159,14 @@ export default function ListingDetailPage() {
       </a>
 
       <a href={`/creator/${listing.creator.id}`} className="mb-3 flex items-center gap-2 hover:opacity-80">
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--accent-bg)] text-xs font-medium text-[var(--accent)]">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--spotlight-bg)] text-xs font-medium text-[var(--spotlight)]">
           {initials(listing.creator.displayName)}
         </div>
         <span className="text-sm font-medium">{listing.creator.displayName}</span>
       </a>
 
       <h1 className="mb-1 text-lg font-medium">{listing.title}</h1>
-      <span className="mb-4 inline-block rounded-full bg-[var(--accent-bg)] px-2.5 py-0.5 text-xs text-[var(--accent)]">
+      <span className="mb-4 inline-block rounded-full bg-[var(--spotlight-bg)] px-2.5 py-0.5 text-xs text-[var(--spotlight)]">
         {categoryLabel(listing.category)}
       </span>
 
@@ -206,7 +206,7 @@ export default function ListingDetailPage() {
             <button
               onClick={act}
               disabled={busy}
-              className="w-full rounded-lg border border-[var(--border-accent)] bg-[var(--accent-bg)] px-4 py-2.5 text-sm text-[var(--accent)] disabled:opacity-60"
+              className="w-full rounded-lg border border-[var(--spotlight-border)] bg-[var(--spotlight-bg)] px-4 py-2.5 text-sm text-[var(--spotlight)] disabled:opacity-60"
             >
               {busy ? STEP_LABEL[step] : isAuction ? "Place bid" : "Buy now"}
             </button>

@@ -15,7 +15,7 @@ export default async function MarketplacePage({
     <main className="mx-auto max-w-5xl px-6 py-10">
       <MarketplaceHeader />
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="mb-8 flex gap-5 overflow-x-auto border-b border-[var(--border)] pb-px">
         {CATEGORIES.map((c) => {
           const active = (category ?? "ALL") === c.value;
           const href = c.value === "ALL" ? "/" : `/?category=${c.value}`;
@@ -24,10 +24,10 @@ export default async function MarketplacePage({
               key={c.value}
               href={href}
               className={
-                "rounded-full px-3 py-1.5 text-sm " +
+                "whitespace-nowrap border-b-2 pb-2.5 text-sm transition-colors " +
                 (active
-                  ? "bg-[var(--accent-bg)] text-[var(--accent)]"
-                  : "border border-[var(--border)] text-[var(--text-secondary)]")
+                  ? "border-[var(--spotlight)] text-[var(--text-primary)]"
+                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]")
               }
             >
               {c.label}

@@ -9,7 +9,7 @@ export function MarketplaceHeader() {
   return (
     <div className="mb-6 flex items-center justify-between">
       <div>
-        <h1 className="text-lg font-medium">Marketplace</h1>
+        <h1 className="font-display text-2xl italic text-[var(--text-primary)]">Marketplace</h1>
         <p className="text-sm text-[var(--text-secondary)]">
           Book media placements directly from creators
         </p>

@@ -46,7 +46,7 @@ export default function ReviewQueuePage() {
   if (status !== "authenticated" || user?.role !== "SUPERADMIN") {
     return (
       <main className="mx-auto max-w-2xl px-6 py-16">
-        <h1 className="mb-2 text-lg font-medium">Review queue</h1>
+        <h1 className="mb-2 font-display text-xl italic">Review queue</h1>
         <p className="text-sm text-[var(--text-secondary)]">
           Only the platform operator can review pending listings.
         </p>
@@ -57,7 +57,7 @@ export default function ReviewQueuePage() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-6">
-        <h1 className="text-lg font-medium">Review queue</h1>
+        <h1 className="font-display text-xl italic">Review queue</h1>
         <p className="text-sm text-[var(--text-secondary)]">
           {listings ? `${listings.length} listing${listings.length === 1 ? "" : "s"} waiting for your approval` : "Loading…"}
         </p>
@@ -88,7 +88,7 @@ export default function ReviewQueuePage() {
             className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4"
           >
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--accent-bg)] text-xs font-medium text-[var(--accent)]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--spotlight-bg)] text-xs font-medium text-[var(--spotlight)]">
                 {initials(listing.creator.displayName)}
               </div>
               <div>

@@ -21,13 +21,13 @@ export default function ConnectAccountsPage() {
   if (status !== "authenticated") {
     return (
       <main className="mx-auto max-w-lg px-6 py-16">
-        <h1 className="mb-2 text-lg font-medium">Connect accounts</h1>
+        <h1 className="mb-2 font-display text-xl italic">Connect accounts</h1>
         <p className="mb-5 text-sm text-[var(--text-secondary)]">
           Connect your wallet first — linked accounts attach to your marketplace profile.
         </p>
         <button
           onClick={() => openConnectModal?.()}
-          className="rounded-lg bg-[var(--accent-bg)] px-4 py-2 text-sm text-[var(--accent)]"
+          className="rounded-lg bg-[var(--spotlight-bg)] px-4 py-2 text-sm text-[var(--spotlight)]"
         >
           Connect wallet
         </button>
@@ -37,7 +37,7 @@ export default function ConnectAccountsPage() {
 
   return (
     <main className="mx-auto max-w-lg px-6 py-10">
-      <h1 className="mb-1 text-lg font-medium">Connect accounts</h1>
+      <h1 className="mb-1 font-display text-xl italic">Connect accounts</h1>
       <p className="mb-6 text-sm text-[var(--text-secondary)]">
         Linked accounts show real follower counts on your public profile — pulled directly
         from each platform, not typed in.
@@ -63,7 +63,7 @@ export default function ConnectAccountsPage() {
                 )}
               </div>
               {linked ? (
-                <span className="rounded-full bg-[var(--accent-bg)] px-2.5 py-1 text-xs text-[var(--accent)]">
+                <span className="rounded-full bg-[var(--spotlight-bg)] px-2.5 py-1 text-xs text-[var(--spotlight)]">
                   Connected
                 </span>
               ) : (

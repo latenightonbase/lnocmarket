@@ -119,3 +119,26 @@ pre-existing gap this build exposed, not something new.
 Also fixed: the /backend proxy was silently dropping the `Location`
 header on redirects, which would have broken OAuth's redirect to
 YouTube/X/etc. regardless of the origin issue above.
+
+## Design pass
+
+Replaced the generic dark-SaaS default (rounded cards, purple accent,
+pill filters - the templated look, not a choice) with something grounded
+in LNOC's actual brand:
+- Background matches lnoc.app's real theme color (#050208), not an
+  arbitrary dark grey
+- Gold "spotlight" accent (attention is the product) instead of generic
+  purple; a separate red "live" color used only for active-auction
+  urgency, never reused elsewhere
+- Fraunces (display serif, italic for headings) + JetBrains Mono (prices,
+  bids - treated like scoreboard numbers) instead of default system fonts
+- Auction listings get a visibly different treatment (live indicator,
+  colored top border) from fixed-price ones, instead of identical cards
+- Category filters are underlined tabs, not the generic pill-button row
+- Removed tracked-out ALL-CAPS section labels (a templated-AI tell) in
+  favor of the display font doing that work instead
+
+Fonts load via a normal Google Fonts stylesheet link rather than
+next/font's build-time fetch - my sandbox can't reach fonts.googleapis.com
+either, so I switched to something I could actually verify compiles
+without network access, rather than push something untested.
