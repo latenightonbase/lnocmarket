@@ -35,8 +35,6 @@ export default async function MarketplacePage({
     <main className="mx-auto max-w-5xl px-6 py-10">
       <MarketplaceHeader />
 
-      {featured && <FeaturedListing listing={featured} />}
-
       <div className="mb-8 flex gap-5 overflow-x-auto border-b border-[var(--border)] pb-px">
         {CATEGORIES.map((c) => {
           const active = (category ?? "ALL") === c.value;
@@ -57,6 +55,8 @@ export default async function MarketplacePage({
           );
         })}
       </div>
+
+      {featured && <FeaturedListing listing={featured} />}
 
       {rest.length === 0 ? (
         <div className="rounded-xl border border-dashed border-[var(--border)] px-6 py-16 text-center text-sm text-[var(--text-muted)]">

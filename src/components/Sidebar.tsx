@@ -2,13 +2,12 @@
 
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Zap, UserCircle2, PlusCircle, ShieldCheck } from "lucide-react";
+import { Zap, PlusCircle, ShieldCheck } from "lucide-react";
 import { useSession } from "@/components/SessionProvider";
 
 const NAV = [
-  { href: "/", label: "Marketplace", icon: Zap },
-  { href: "/account", label: "Connect accounts", icon: UserCircle2 },
-  { href: "/listings/new", label: "List something", icon: PlusCircle },
+  { href: "/", label: "Browse listings", icon: Zap },
+  { href: "/listings/new", label: "Create your own listing", icon: PlusCircle },
 ];
 
 export function Sidebar() {
@@ -62,6 +61,12 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto">
+        <a
+          href="/account"
+          className="mb-2 block text-center text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+        >
+          Connect accounts
+        </a>
         <ConnectButton.Custom>
           {({ account, openConnectModal, openAccountModal, mounted }) => {
             const connected = mounted && account;
