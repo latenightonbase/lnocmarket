@@ -142,3 +142,15 @@ Fonts load via a normal Google Fonts stylesheet link rather than
 next/font's build-time fetch - my sandbox can't reach fonts.googleapis.com
 either, so I switched to something I could actually verify compiles
 without network access, rather than push something untested.
+
+## Featured billboard (homepage)
+
+Added the "big featured listing" treatment lnoc.app itself already uses
+for its live auction - the marketplace grid had nothing like it, which is
+why it read as flat even after the color/type pass. Picks the
+soonest-ending live auction (falls back to highest-priced listing if none),
+shown big above the grid: creator, title, description, large mono price,
+countdown, one clear CTA. Only shows on the unfiltered view - once
+someone's browsing a specific category the grid is the point, not a
+billboard. The featured listing is excluded from the grid below it so it
+doesn't appear twice.
