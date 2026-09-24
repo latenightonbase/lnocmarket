@@ -154,3 +154,25 @@ countdown, one clear CTA. Only shows on the unfiltered view - once
 someone's browsing a specific category the grid is the point, not a
 billboard. The featured listing is excluded from the grid below it so it
 doesn't appear twice.
+
+## Full redesign to match lnoc.app exactly
+
+Corrected course after the first design pass missed the mark - rebuilt to
+match a real screenshot of lnoc.app:
+- Persistent left sidebar nav (logo, tagline, nav links, wallet connect at
+  bottom) instead of a plain top header - matches lnoc.app's actual layout
+- Color swap: magenta primary (was gold - wrong), violet for secondary
+  labels, red still reserved for live-only. Background matches lnoc.app's
+  real near-black-purple more precisely
+- Fonts: Space Grotesk (bold, uppercase headlines/numbers) instead of an
+  italic serif - the reference uses bold geometric sans, not elegant
+  serif. Permanent Marker for just the logo wordmark, matching the
+  brush-style lettering in the reference
+- Billboard rebuilt as the real two-tier structure from the screenshot:
+  an outer "spotlight is open" banner, inner detail card with live tag,
+  two stat boxes, digital-clock-style countdown digits, big CTA button
+- Note: my local preview screenshots can't load Google Fonts (same
+  sandbox network restriction as before) so I can't personally confirm
+  the logo font renders correctly - the Next.js build itself succeeded
+  cleanly, and real browsers (yours, Vercel's) have normal internet
+  access, but this one detail needs your eyes to confirm

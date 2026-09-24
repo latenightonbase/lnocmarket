@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  /* Stage — the exact near-black lnoc.app itself uses, not a generic dark grey */
-  --background: #050208;
-  --surface: #0e0912;
-  --surface-raised: #16101d;
-  --border: #241a2c;
-  --border-strong: #38293f;
+  /* Stage — the exact near-black lnoc.app itself uses */
+  --background: #07030c;
+  --surface: #120a1c;
+  --surface-raised: #1a1027;
+  --border: #2a1d3a;
+  --border-strong: #3d2a52;
 
-  /* Warm, not stark — a marquee-bulb undertone rather than pure white/grey */
-  --text-primary: #f3ede4;
-  --text-secondary: #9d8fa8;
-  --text-muted: #6a5d75;
+  --text-primary: #f5f3f7;
+  --text-secondary: #9b93a8;
+  --text-muted: #6b6377;
 
-  /* Spotlight — the thing being sold is attention, so gold carries that idea,
-     not a generic SaaS purple. Used for value, price, primary actions. */
-  --spotlight: #f0b429;
-  --spotlight-bg: rgba(240, 180, 41, 0.1);
-  --spotlight-border: rgba(240, 180, 41, 0.35);
+  /* Magenta — the primary accent on lnoc.app itself: "OPEN", the price,
+     the CTA button. This is the one bold color, spent deliberately. */
+  --spotlight: #e838e8;
+  --spotlight-bg: rgba(232, 56, 232, 0.12);
+  --spotlight-border: rgba(232, 56, 232, 0.4);
 
-  /* Live — reserved ONLY for active-auction urgency (countdown, "LIVE" tag).
-     Never reused for anything else, so it stays meaningful when it appears. */
+  /* Violet — secondary labels (CURRENT BID, CURRENT LEADER on lnoc.app) */
+  --violet: #9d5ce8;
+  --violet-bg: rgba(157, 92, 232, 0.12);
+
+  /* Live — reserved ONLY for active-auction urgency. */
   --live: #ff4d5e;
   --live-bg: rgba(255, 77, 94, 0.12);
 
@@ -28,8 +30,9 @@
   --success-bg: rgba(74, 222, 128, 0.1);
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Space Grotesk", var(--font-sans);
+  --font-logo: "Permanent Marker", cursive;
+  --font-mono: "Space Grotesk", var(--font-sans);
 }
 
 body {
@@ -39,10 +42,16 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.font-logo {
+  font-family: var(--font-logo);
 }
 
 .font-mono {
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  font-weight: 700;
 }
